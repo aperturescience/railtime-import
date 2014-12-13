@@ -29,3 +29,5 @@ node_modules
 
 # Redis dump
 dump.rdb
+
+.DS_Store
