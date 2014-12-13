@@ -12,6 +12,7 @@ var redis     = require('redis'),
 // Check for environment variables
 if (!process.env.RAILTIME_CONSUMER_KEY || !process.env.RAILTIME_CONSUMER_SECRET) {
   console.warn('One or more required environment variables are not set.');
+  process.exit(0);
 }
 
 function getStations(callback) {
