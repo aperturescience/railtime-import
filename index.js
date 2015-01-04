@@ -33,11 +33,13 @@ function storeStations(err, stations) {
 
   // populate stations by id
   stations.forEach(function(station, i) {
-    client.hmset('station:' + parseInt(station.Id), map.transform(station)); // station:id namespace
-  });
+    // filter out non-belgian and non-commercial stations
+    if (!station.IsBelgianStation
+     || !station.IsCommercialStation
+     || station.IsDeleted) return;
 
-  // populate station names set with normalized name and id
-  stations.forEach(function(station, i) {
+    client.hmset('station:' + parseInt(station.Id), map.transform(station)); // station:id namespace
+
     client.hmset('station:names', slug(station.NameEN.toLowerCase()), parseInt(station.Id));
     client.hmset('station:names', slug(station.NameNL.toLowerCase()), parseInt(station.Id));
     client.hmset('station:names', slug(station.NameFR.toLowerCase()), parseInt(station.Id));
